@@ -12,7 +12,10 @@ const TG_CHAT_ID = process.env.TG_CHAT_ID;
 app.post('/notify-2fa', async (req, res) => {
   const { account, lastOnline, operator, location } = req.body;
   const now = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
-
+// 添加对根路径的处理，让 UptimeRobot 收到 200 状态码
+app.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
   const text = `
 🚨 **【后台安全警告 - 谷歌验证码已重置】**
 ━━━━━━━━━━━━━━━━━━
