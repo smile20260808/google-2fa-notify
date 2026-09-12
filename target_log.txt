@@ -1,0 +1,41 @@
+fa fa-clock-o bg-gray"></i>
+      <div class="timeline-item">
+        <span class="time"><i class="fa fa-clock-o"></i>09月09日 05:58</span>
+        <div class="timeline-header">
+          <span>管理員(佩佩猪)清除了 Google 認證</span>
+          <small>平台會員(9685f070-17a0-42c7-aadb-7eccf5464dcd)</small>
+        </div>
+      </div>
+    </li>
+    <li>
+      <i class="fa fa-clock-o bg-gray"></i>
+      <div class="timeline-item">
+        <span class="time"><i class="fa fa-clock-o"></i>09月09日 05:34</span>
+        <div class="timeline-header">
+          <span>管理員(佩佩猪)清除了 Google 認證</span>
+          <small>平台會員(dadf51c4-c35e-412b-9ee7-d362560054ed)</small>
+        </div>
+      </div>
+    </li>
+    <li>
+      <i class="fa fa-clock-o bg-gray"></i>
+      <div class="timeline-item">
+        <span class="time"><i class="fa fa-clock-o"></i>09月09日 05:31</span>
+        <div class="timeline-header">
+          <span>管理員(佩佩猪)清除了 Google 認證</span>
+          <small>平台會員(fe65d141-70d0-4e8b-8e22-4568e33a16bd)</small>
+        </div>
+      </div>
+    </li>
+    <li>
+      <i class="fa fa-clock-o bg-gray"></i>
+      <div class="timeline-item">
+        <span class="time"><i class="fa fa-clock-o"></i>09月09日 05:30</span>
+        <div class="timeline-header">
+          <span>管理員(佩佩猪)清除了 Google 認證</span>
+          <small>平台會員(5286e822-3948-4c3a-9d70-6cc463756b99)</small>
+        </div>
+      </div>
+    </li>
+    <li>
+      <i

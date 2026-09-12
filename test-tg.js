@@ -1,37 +1,55 @@
-const https = require('https');
+const axios = require('axios');
 
-// 请把单引号里的内容替换为你自己的 Token 和 Chat ID
-const BOT_TOKEN = '8953921694:AAHzXS2zqmLB2qwwjJ85PowflRaOMA66tsw';
-const CHAT_ID = '-1004423976022';
+// 1. 填入你当前的 Cookie
+const COOKIE = '在此替换你的完整Cookie内容';
 
-const postData = JSON.stringify({
-  chat_id: CHAT_ID,
-  text: '🔔 这是一条本地测试通知，如果收到说明 Bot 配置完全正常！'
-});
+// 2. 刚才测试操作的管理员 peiai 的 UUID
+// （如果不确定 peiai 的 UUID，先保持下面这个，或者去浏览器复制他的链接里的那串 UUID）
+const TEST_ADMIN_UUID = '57c6af58-6380-4ddb-b6fc-dcd67d91960c'; 
 
-const options = {
-  hostname: 'api.telegram.org',
-  port: 443,
-  path: `/bot${BOT_TOKEN}/sendMessage`,
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Content-Length': Buffer.byteLength(postData)
+async function runTest() {
+  console.log('🔍 正在单点拉取管理员历史页面...');
+  const url = 'https://jemnkcwc.com/admin/users/' + TEST_ADMIN_UUID + '/histories';
+  
+  try {
+    const res = await axios.get(url, {
+      headers: {
+        'Cookie': COOKIE,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+      },
+      timeout: 10000
+    });
+
+    const html = res.data;
+    console.log(`📄 页面获取成功，总字符长度: ${html.length}`);
+
+    // 检查关键字
+    const hasClear = html.includes('清除');
+    const hasGoogle = html.includes('Google');
+    console.log(`🔎 页面包含 "清除": ${hasClear} | 包含 "Google": ${hasGoogle}`);
+
+    if (!hasClear || !hasGoogle) {
+      console.log('⚠️ 警告：当前拉取到的页面根本没有 "清除" 或 "Google"！');
+      console.log('👉 可能原因：');
+      console.log('1. TEST_ADMIN_UUID 不是刚才执行操作的那个管理员');
+      console.log('2. 后台历史记录有延迟或翻页到了下一页');
+      return;
+    }
+
+    // 查找位置并打印前后文字
+    const idx = html.indexOf('清除');
+    const snippet = html.slice(Math.max(0, idx - 100), Math.min(html.length, idx + 200));
+    console.log('\n--- 🎯 真实页面核心片段如下 ---');
+    console.log(snippet.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' '));
+    console.log('-------------------------------\n');
+
+  } catch (err) {
+    console.error('❌ 拉取失败:', err.message);
+    if (err.response) {
+      console.error('状态码:', err.response.status);
+    }
   }
-};
+}
 
-const req = https.request(options, (res) => {
-  let data = '';
-  res.on('data', (chunk) => { data += chunk; });
-  res.on('end', () => {
-    console.log('响应状态码:', res.statusCode);
-    console.log('返回内容:', data);
-  });
-});
-
-req.on('error', (e) => {
-  console.error('请求异常:', e.message);
-});
-
-req.write(postData);
-req.end();
+runTest();
